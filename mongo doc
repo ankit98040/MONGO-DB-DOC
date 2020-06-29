@@ -1,0 +1,209 @@
+db.projects.insertMany({
+	name: 'TCS',
+	category: 'Project',
+	due_date: new Date('2020-06-19'),
+	technologies: ['javascript', 'Node js', 'Mongo'],
+	developers: [
+		{
+		name: 'Ishita',
+		role: 'HR'
+		},
+		{
+		name: 'animesh',
+		role: 'TPO'
+		}
+	],
+	cost: 6000
+},
+{
+	name: 'T Series',
+	category: 'multimedia',
+	due_date: new Date('2020-09-30'),
+	technologies: ['maya', 'ps','illustrator','3ds'],
+	developers: [
+		{
+		name: 'ananya',
+		role: 'designer'
+		},
+		{
+		name: 'rounak',
+		role: 'artist'
+		},
+		{
+		name: 'JD',
+		role: 'Singer'
+		}
+	],
+	cost: 200000
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+db.projects.insertOne(
+   { "item" : "canvas",
+     "qty" : 100,
+     "tags" : ["cotton"],
+     "size" : { "h" : 28, "w" : 35.5, "uom" : "cm" }
+   }
+)
+
+
+
+
+
+db.projects.insertMany( [
+   { "item": "journal", "qty": 25, "size": { "h": 14, "w": 21, "uom": "cm" }, "status": "A" },
+   { "item": "notebook", "qty": 50, "size": { "h": 8.5, "w": 11, "uom": "in" }, "status": "A" },
+   { "item": "paper", "qty": 100, "size": { "h": 8.5, "w": 11, "uom": "in" }, "status": "D" },
+   { "item": "planner", "qty": 75, "size": { "h": 22.85, "w": 30, "uom": "cm" }, "status": "D" },
+   { "item": "postcard", "qty": 45, "size": { "h": 10, "w": 15.25, "uom": "cm" }, "status": "A" }
+]);
+
+
+
+
+db.projects.find( { status: "D" } )
+
+
+
+db.projects.find( { size: { h: 14, w: 21, uom: "cm" } } )
+
+
+
+for size less than 15
+db.projects.find( { "size.h": { $lt: 15 } } )
+
+for size greater than 10
+db.projects.find( { "size.h": { $gt: 10 } } )
+
+
+
+
+Write an implied AND query.
+To write a compound query in MongoDB that matches all of the query predicates (i.e. a logical AND), specify all of the fields that you wish to match in your find document. By default, MongoDB matches all of the fields.
+
+The following example retrieves all documents in the inventory collection where the status equals "A" and qty is less than ($lt) 30:
+
+
+db.projects.find( { status: "A", qty: { $lt: 30 } } )
+
+
+
+
+
+
+
+Write an “or” query.
+Using the $or query operator, specify a compound query that joins each clause with a logical OR conjunction so that the query selects the documents in the collection that match at least one condition.
+
+The following example retrieves all documents in the collection where the status equals "A" or qty is less than 30:
+
+db.projects.find( { $or: [ { status: "A" }, { qty: { $lt: 30 } } ] } )
+
+
+
+
+
+
+
+Write an “or” query.
+Using the $or query operator, specify a compound query that joins each clause with a logical OR conjunction so that the query selects the documents in the collection that match at least one condition.
+
+The following example retrieves all documents in the collection where the status equals "A" or qty is less than 30:
+
+copycopied
+myCursor = db.inventory.find( { $or: [ { status: "A" }, { qty: { $lt: 30 } } ] } )
+
+
+
+
+
+
+
+
+
+
+Update a single document in the inventory collection.
+
+To change a field value, MongoDB provides update operators to modify values. Some update operators, including will create the specified field if the field does not exist in the document.
+
+The following operation updates the first document with item equal to paper. The operation uses:
+
+$set to update the status field and the uom field embedded in the size document. To access the fields within embedded documents, the operation uses dot notation.
+$currentDate to set the lastModified field to the current date.
+copycopied
+
+ // specifies the document to update
+
+db.projects.updateOne(
+    { "item" : "paper" },
+    {
+      $set: {  "size.uom" : "cm",  "status" : "P" },
+      $currentDate: { "lastModified": true }
+    }
+)
+
+
+
+
+
+
+Update multiple documents.
+
+The following operation updates all of the documents with quantity value less than 50.
+
+copycopied
+db.inventory.updateMany(
+    { "qty" : { $lt: 50 } }, // specifies the documents to update
+    {
+       $set: { "size.uom" : "cm", "status": "P" },
+       $currentDate : { "lastModified": true }
+    }
+)
+
+
+
+
+
+
+
+Delete a single document.
+
+The following operation deletes the first document with status equal to D:
+
+
+
+db.inventory.deleteOne(
+    { "status": "D" } // specifies the document to delete
+)
+
+
+
+
+
+
+Delete multiple documents.
+
+The following operation deletes all of the documents in the specified inventory collection with status equal to A:
+
+
+db.inventory.deleteMany(
+    { "status" : "A" } // specifies the documents to delete
+)
