@@ -1,0 +1,32 @@
+1. to create a database
+	use projectmanagement- this will create a database if not exist
+
+2. to create a collection:
+	collection refers to documents or tables in relational database
+
+	db.createCollection('projects')
+
+3. show collections
+
+4. how is data stored in mongodb    #document format
+
+db.projects.insert({
+	name: 'NiiT',
+	category: 'training',
+	due_date: new Date('2020-06-30'),
+	technologies: ['html', 'css'],
+	developers: [
+		{
+		name: 'Ankit',
+		role: 'Programmer'
+		},
+		{
+		name: 'Arijit',
+		role: 'student'
+		}
+	],
+	cost: 2000
+});
+
+5. db.projects.find();
+6. to look it more prettier   db.projects.find().pretty()

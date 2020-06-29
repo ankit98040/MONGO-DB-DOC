@@ -1,4 +1,4 @@
-db.projects.insertMany({
+db.projects.insert({
 	name: 'TCS',
 	category: 'Project',
 	due_date: new Date('2020-06-19'),
@@ -14,8 +14,9 @@ db.projects.insertMany({
 		}
 	],
 	cost: 6000
-},
-{
+}
+
+db.projects.insert({{
 	name: 'T Series',
 	category: 'multimedia',
 	due_date: new Date('2020-09-30'),
@@ -88,9 +89,11 @@ db.projects.find( { size: { h: 14, w: 21, uom: "cm" } } )
 
 
 for size less than 15
+
 db.projects.find( { "size.h": { $lt: 15 } } )
 
 for size greater than 10
+
 db.projects.find( { "size.h": { $gt: 10 } } )
 
 
